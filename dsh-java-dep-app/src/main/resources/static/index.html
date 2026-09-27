@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DSH Dependency Radar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">DR</div>
+      <div><strong>Dependency Radar</strong><span>Powered by Harness</span></div>
+    </div>
+    <button class="primary block" id="newConversation">＋ 新对话</button>
+    <div class="section-label"><span>对话记录</span></div>
+    <div id="conversationList" class="item-list conversation-list"></div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <div>
+        <div class="title-row">
+          <span id="statusDot" class="dot"></span>
+          <h1 id="currentName">依赖雷达</h1>
+        </div>
+        <p id="currentDetail">解析依赖树、揪版本冲突、扫 CVE 提示 · 只分析不升级</p>
+      </div>
+      <div class="header-actions">
+        <button class="ghost icon-btn" id="toggleTheme" title="切换主题">🌙</button>
+      </div>
+    </header>
+
+    <div id="workspace" class="workspace">
+      <section class="center">
+        <div id="chatMessages" class="chat-scroll"></div>
+        <div class="composer-wrap">
+          <div id="streamStatus" class="stream-status hidden">
+            <span id="streamStatusText"><span class="status-spinner"></span>AI 正在思考</span>
+          </div>
+          <div class="composer">
+            <textarea id="chatInput" rows="1" placeholder="例如：粘贴依赖树帮我找版本冲突，有没有需要关注的 CVE？"></textarea>
+            <div class="composer-bar">
+              <span class="composer-hint"><kbd>⌘</kbd>+<kbd>↵</kbd> 发送 · 只分析不执行升级</span>
+              <div class="composer-actions">
+                <button class="ghost small hidden" id="stopStream">停止</button>
+                <button class="send-btn" id="sendMessage" title="发送">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="resource-sidebar">
+        <div class="resource-scroll">
+          <div class="resource-header">
+            <b>雷达工作台</b>
+            <button class="ghost small" id="refreshResource">刷新</button>
+          </div>
+          <nav class="resource-tabs">
+            <button data-resource-tab="tree" class="active">依赖树</button>
+            <button data-resource-tab="check">体检</button>
+          </nav>
+          <section class="panel" data-tab="tree">
+            <div class="panel-title"><span>依赖树解析</span></div>
+            <div class="panel-body" style="padding:8px">
+              <textarea id="treeInput" rows="10" style="width:100%;font:12px monospace;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)" placeholder="[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.11.0:compile&#10;[INFO] +- ch.qos.logback:logback-classic:jar:1.2.3:compile&#10;或 gradle 输出"></textarea>
+              <button class="ghost small" id="treeBtn" style="margin-top:6px">解析</button>
+              <div id="treeResult" class="muted" style="margin-top:8px">节点数 / 深度 / 坐标数</div>
+            </div>
+          </section>
+          <section class="panel hidden" data-tab="check">
+            <div class="panel-title"><span>冲突 / 过期 / CVE</span></div>
+            <div class="panel-body" style="padding:8px">
+              <button class="ghost small" id="checkBtn">对上面的依赖树体检</button>
+              <div id="conflictResult" class="muted" style="margin-top:8px">版本冲突一览</div>
+              <div id="cveResult" class="muted" style="margin-top:8px">CVE 提示（本地启发式）</div>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

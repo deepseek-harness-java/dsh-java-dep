@@ -1,0 +1,6 @@
+id: dsh-java-dep-plugin
+name: DSH DependencyRadar Plugin
+version: 0.1.0
+author: Xiaofuge
+description: Maven/Gradle dependency radar (parse tree, find conflicts, outdated, CVE scan, upgrade path) for DeepSeek Harness.
+entrypoint: cn.xiaofuge.dsh.dep.plugin.DshDependencyRadarPlugin
